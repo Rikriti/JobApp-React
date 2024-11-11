@@ -4,22 +4,22 @@
         "src": "package.json",
         "use": "@vercel/static-build",
         "config": {
-          "distDir": "build"
+          "dist": "build"
         }
       },
       {
         "src": "backend/jobs.json",
-        "dest":"http://localhost:5000/"
+        "destination":"http://localhost:5000/"
       }
     ],
     "routes": [
       {
         "src": "/jobs",
-        "dest": "http://localhost:5000/jobs"
+        "destination": "http://localhost:5000/jobs"
       },
       {
         "src": "/:path*",
-        "dest": "http://localhost:5000/:path*"
+        "destination": "http://localhost:5000/:path*"
       }
     ],
     "rewrites": [
