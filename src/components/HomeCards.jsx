@@ -1,7 +1,25 @@
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Card from './Card';
 
 const HomeCards = () => {
+  const [jobs, setJobs] = useState([]);
+
+  // Fetch jobs from JSON Server
+  useEffect(() => {
+    const fetchJobs = async () => {
+      try {
+        const response = await fetch('http://localhost:5000/jobs');
+        const data = await response.json();
+        setJobs(data);
+      } catch (error) {
+        console.error('Error fetching jobs:', error);
+      }
+    };
+
+    fetchJobs();
+  }, []);
+
   return (
     <section className='py-4'>
       <div className='container-xl lg:container m-auto'>
@@ -31,8 +49,19 @@ const HomeCards = () => {
             </Link>
           </Card>
         </div>
+
+        {/* Display jobs fetched from the backend */}
+        <div className='mt-8'>
+          {jobs.map((job) => (
+            <div key={job.id} className='p-4 border-b'>
+              <h3 className='font-bold'>{job.title}</h3>
+              <p>{job.company}</p>
+            </div>
+          ))}
+        </div>
       </div>
     </section>
   );
 };
+
 export default HomeCards;
