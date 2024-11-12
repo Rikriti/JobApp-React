@@ -1,36 +1,25 @@
 {
-    "builds": [
-      {
-        "src": "package.json",
-        "use": "@vercel/static-build",
-        "config": {
-          "dist": "build"
-        }
-      },
-      {
-        "src": "backend/jobs.json",
-        "destination":"http://localhost:5000/"
+  "builds": [
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "dist"
       }
-    ],
-    "routes": [
-      {
-        "src": "/jobs",
-        "destination": "http://localhost:5000/jobs"
-      },
-      {
-        "src": "/:path*",
-        "destination": "http://localhost:5000/:path*"
-      }
-    ],
-    "rewrites": [
-      {
-        "source": "/:path*",
-        "destination": "http://localhost:5000/:path*"
-      }
-    ],
-    "devCommand": {
-      "frontend": "npm run dev",
-      "backend": "npm run server"
+    },
+    {
+      "src": "backend/jobs.json",
+      "use": "@vercel/node"
     }
-  }
-  
+  ],
+  "routes": [
+    {
+      "src": "/jobs",
+      "dest": "/backend/jobs.json"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
+    }
+  ]
+}
